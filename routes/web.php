@@ -20,8 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 //songs
-Route::resource('songs', 'SongsController');
-Route::post('/songs/upload', [
-    'as' => 'songs.upload',
-    'uses' => 'SongsController@upload'
-]);
+Route::resource('playlists', 'PlaylistsController');

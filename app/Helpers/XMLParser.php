@@ -64,6 +64,16 @@ class XMLParser
         return $songs_info_text;
     }
 
+    public static function isXML($file)
+    {
+        $file_mime_type = $file->getMimeType();
+        $valid_mime_type = ['text/xml', 'application/xml'];
+
+        $is_valid_extenstion = $file->getClientOriginalExtension() == 'xml';
+        $is_valid_mime_type = in_array($file_mime_type, $valid_mime_type, true);
+        return $is_valid_extenstion && $is_valid_mime_type;
+    }
+
     public static function joinXMLFile(\SplFileObject $xml_file) :string
     {
         $xml_text = str_replace(["\r\n", "\r", "\n", "\t"], '', $xml_file->fread($xml_file->getSize()));

@@ -1,8 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-  @if ($songs)
-      <div>
+  @if ($playlists)
+    <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>名前</th>
+            </tr>
+          </thead>
+          <tbody>
+      <?php $i=1; ?>
+    @foreach ($playlists as $playlist)
+          <tr>
+            <th scope="row">{{ $i }}</th>
+            <td>{{ $playlist->name }}</td>
+          </tr>
+          <?php $i += 1; ?>
+    @endforeach
+          </tbody>
+        </table>
+      </div>
+  @endif
+      {{-- <div>
         <table class="table">
           <thead>
             <tr>
@@ -15,8 +35,7 @@
             </tr>
           </thead>
           <tbody>
-    <?php $i = 1; ?>
-    @foreach ($songs as $song)
+    @foreach ($playlists as $playlist)
           <tr>
             <th scope="row">{{ $i }}</th>
             <td>{{ $song->title }}</td>
@@ -25,15 +44,9 @@
             <td>{{ $song->genre }}</td>
             <td>{{ $song->play_count }}</td>
           </tr>
-      <?php $i += 1; ?>
     @endforeach
           </tbody>
         </table>
-      </div>
-  @endif
-  <form action="{{ route('songs.upload') }}" method="post" enctype="multipart/form-data">
-    {{ csrf_field() }}
-    <input type="file" name="songs_xml" id="songs_xml">
-    <input type="submit" value="Upload">
-  </form>
+      </div> --}}
+      <a href="{{ route('playlists.create')}}" class="btn btn-primary">Upload XML</a>
 @endsection
