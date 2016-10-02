@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="panel panel-primary">
+        <div class="panel-heading">{{ $playlist->name }}</div>
+        <div class="panel-body">
         <table class="table">
           <thead>
             <tr>
@@ -28,7 +32,6 @@
     @endforeach
           </tbody>
         </table>
-      </div>
 
       <form action="{{ route('playlists.destroy', $playlist) }}" method="post">
         {{ csrf_field() }}
@@ -36,4 +39,9 @@
         <input type="hidden" name="_method" id="_method" value="DELETE">
         <button type="submit" class="btn btn-danger">削除</button>
       </form>
+</div>
+</div>
+</div>
+</div>
+</div>
 @endsection
