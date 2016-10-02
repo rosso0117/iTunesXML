@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <canvas id="radarChartCanvas" width="210" height="280">
-        <script id="radarChartScript" src="/js/radarChart.js" review-jsons=" <?php $review_jsons; ?>">
+        <script id="radarChartScript" src="/js/radarChart.js" review-jsons="{{ $review_jsons }}">
         </script>
       </div>
       <div class="modal-footer">

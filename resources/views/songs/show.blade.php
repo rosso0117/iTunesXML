@@ -3,7 +3,6 @@
 @section('content')
   {{ $song->title }}
   @if($reviews)
-    <?php $review_jsons = []; ?>
     <h4>レビュー</h4>
     <div>
       <table class="table">
@@ -19,9 +18,6 @@
             <tr>
               <th scope="row">{{ $i }}</th>
               <td><a href="{{ route('reviews.show', $review) }}" >{{ $review->title }}</a></td>
-              <?php
-                $review_jsons[] = json_encode($review, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
-              ?>
               <td>
                   <button type="button" class="btn btn-primary chart-button" id="chartButton" data-toggle="modal" data-target="#reviewModal" value="{{ $i - 1 }}">
                     閲覧
@@ -114,10 +110,6 @@
     });
   });
 
-  $('.chart-button').click(function(e) {
-    var index = ($(this).val());
-    $('#radarChartScript').attr('review-json', "{{ $review_jsons[" + index + "]" }}");
-  });
 </script>
 <script src="/js/radarChart.js"></script>
 @endsection
