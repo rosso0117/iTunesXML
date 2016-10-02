@@ -1,39 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-  <div>
-    <table class="table">
-      <thead>
-        <tr>
-          <th></th>
-          <th>タイトル</th>
-          <th>レビュー</th>
-          <th>芸術性</th>
-          <th></th>
-          <th>再生回数</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php $i=1; ?>
-        @foreach ($playlist->songs as $song)
-          <tr>
-            <th scope="row">{{ $i }}</th>
-            <td><a href="{{ route('songs.show', $song) }}">{{ $song->title }}</a></td>
-            <td>{{ $song->artist }}</td>
-            <td>{{ $song->album }}</td>
-            <td>{{ $song->genre }}</td>
-            <td>{{ $song->play_count }}</td>
-          </tr>
-          <?php $i += 1; ?>
-        @endforeach
-      </tbody>
-    </table>
+  <div class="modal fade" id="calcModal" tabindex="-1" role="dialog" aria-labelledby="calcLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <button type="button" class="close" data-dismiss="modal" aria-label="閉じる"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="calcLabel">計算結果</h4>
+        </div>
+        <div class="modal-body">
+          <div id="resultText" class="col-sm-10 col-sm-offset-2"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <form action="{{ route('playlists.destroy', $playlist) }}" method="post">
-    {{ csrf_field() }}
-    <a href="{{ route('playlists.index') }}" class="btn btn-primary">戻る</a>
-    <input type="hidden" name="_method" id="_method" value="DELETE">
-    <button type="submit" class="btn btn-danger">削除</button>
-  </form>
+  <!-- /.modal -->
 @endsection

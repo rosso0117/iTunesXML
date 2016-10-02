@@ -32,6 +32,7 @@ class ReviewsController extends Controller
     public function store(Request $request)
     {
         $rules = [
+            'song_id' => 'required',
              'title' => 'required',
             'body' => 'required',
             'stars' => 'min:0|max:5',
@@ -43,10 +44,12 @@ class ReviewsController extends Controller
 
         $this->validate($request, $rules);
         $review = new Review($request->all());
+        // TODO 対応させる
         $review->user_id = 1;
-        $review->song_id = 1;
         $review->save();
-        $song = Song::findOrFail(1);
+        $song = Song::findOrFail($request->input('song_id'));
         $song->reviews()->save($review);
+
+        return redirect()->route('songs.show', $request->input('song_id'));
     }
 }

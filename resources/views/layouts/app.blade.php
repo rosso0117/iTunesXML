@@ -20,6 +20,7 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <script src="/js/app.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-static-top">
@@ -85,10 +86,8 @@
       @yield('content')
     </div>
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
       @yield('scripts')
-    <script src="/js/radarChart.js"></script>
 </body>
 </html>
