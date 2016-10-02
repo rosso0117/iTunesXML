@@ -18,7 +18,7 @@
     @foreach ($playlist->songs as $song)
           <tr>
             <th scope="row">{{ $i }}</th>
-            <td>{{ $song->title }}</td>
+            <td><a href="{{ route('songs.show', $song) }}">{{ $song->title }}</a></td>
             <td>{{ $song->artist }}</td>
             <td>{{ $song->album }}</td>
             <td>{{ $song->genre }}</td>

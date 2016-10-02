@@ -36,6 +36,12 @@ class PlaylistsController extends Controller
 
     public function store(Request $request)
     {
+        $rules = [
+            'playlist_xml' => 'required'
+        ];
+
+        $this->validate($request, $rules);
+
         $file = $request->file('playlist_xml');
 
         if ( !XMLParser::isXML($file) ) {

@@ -14,4 +14,9 @@ class Song extends Model
     {
         return $this->belongsToMany('App\Playlist');
     }
+
+    public function reviews()
+    {
+        return $this->hasMany('App\Review');
+    }
 }

@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/css/bootstrap-slider.min.css">
 
     <!-- Scripts -->
     <script>
@@ -80,9 +81,14 @@
       @if (Session::has('flash_message'))
         <div class="alert alert-success">{{ Session::get('flash_message')}}</div>
       @endif
+
       @yield('content')
     </div>
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.2.0/bootstrap-slider.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
+      @yield('scripts')
+    <script src="/js/radarChart.js"></script>
 </body>
 </html>

@@ -27,6 +27,8 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot();
         Route::model('playlists', 'App\Playlist');
+        Route::model('songs', 'App\Song');
+        Route::model('reviews', 'App\Review');
     }
 
     /**

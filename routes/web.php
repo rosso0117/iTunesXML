@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index');
 
 //songs
 Route::resource('playlists', 'PlaylistsController');
+Route::resource('songs', 'SongsController');
+Route::resource('reviews', 'ReviewsController');
