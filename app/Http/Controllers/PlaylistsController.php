@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 use App\Http\Requests;
 use App\Playlist;
+use App\User;
 use App\Song;
 use App\Helpers\XMLParser;
 
@@ -20,16 +22,27 @@ class PlaylistsController extends Controller
         return view('playlists.create');
     }
 
+    public function destroy(Playlist $playlist)
+    {
+        $playlist->delete();
+        \Session::flash('flash_message', 'プレイリストを消去しました');
+        return redirect()->route('playlists.index');
+    }
+
+    public function show(Playlist $playlist)
+    {
+        return view('playlists.show', compact('playlist'));
+    }
+
     public function store(Request $request)
     {
         $file = $request->file('playlist_xml');
 
         if ( !XMLParser::isXML($file) ) {
-            dd('isxml');
-            return;
+            \Session::flash('flash_message', 'XMLファイルではありません');
+            return redirect()->route('playlists.index');
         }
 
-        //TODO ロールバックさせる
         // Fileを命名して保存
         $file_name = (string)filter_var($request->input(['name']));
         if ($file_name == '') {
@@ -38,16 +51,25 @@ class PlaylistsController extends Controller
         $file_name_with_time = $file_name . '_' . time();
         $move = $file->move(storage_path() . '/xml', $file_name_with_time);
 
-        $playlist = new Playlist(['name' => $file_name]);
-        $playlist->save();
+        DB::transaction(function() use($file_name, $file_name_with_time) {
+            $playlist = new Playlist(['name' => $file_name]);
+            $playlist->save();
 
-        // 曲の情報の連想配列が入った配列を取得する
-        // TODO このあたりの処理もヘルパーでやる
-        $xml_path = storage_path() . '/xml' . '/' . $file_name_with_time;
-        $xml_file = new \SplFileObject($xml_path);
-        $xml_text = XMLParser::joinXMLFile($xml_file);
-        $songs_info_text = XMLParser::grepSongsInfoTextFromXMLText($xml_text);
+            // 曲の情報の連想配列が入った配列を取得する
+            // TODO このあたりの処理もヘルパーでやる
+            $xml_path = storage_path() . '/xml' . '/' . $file_name_with_time;
+            $xml_file = new \SplFileObject($xml_path);
+            $xml_text = XMLParser::joinXMLFile($xml_file);
+            $songs_info_text = XMLParser::grepSongsInfoTextFromXMLText($xml_text);
 
+            self::saveOrUpdateSongs($playlist, $songs_info_text);
+        });
+
+        \Session::flash('flash_message', 'XMLファイルをアップロードしました');
+        return redirect()->route('playlists.index');
+    }
+
+    private static function saveOrUpdateSongs(Playlist $playlist, array $songs_info_text) {
         // 各楽曲のXMLテキストを連想配列にして、DBに保存
         foreach ($songs_info_text as $song_info_text) {
             $song_data = XMLParser::getSongDataFromInfoText($song_info_text);
@@ -62,11 +84,7 @@ class PlaylistsController extends Controller
             } else {
                 $song->save();
             }
-                $playlist->songs()->attach($song);
+            $playlist->songs()->attach($song);
         }
-
-        $playlists = Playlist::all();
-        return view('playlists.index', compact('playlists'));
     }
-
 }

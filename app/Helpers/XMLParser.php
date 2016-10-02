@@ -44,8 +44,6 @@ class XMLParser
             }
         }
 
-
-        var_dump($song_data);
         return $song_data;
     }
 
