@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="form-group">
-              <label for="body">各項目の評価</label>
+              <label for="body">レビュー</label>
             <textarea class="form-control" name="body" id="body" cols="30" rows="5"></textarea>
           </div>
           <div class="form-group">
@@ -84,7 +84,8 @@
           </div>
           <input type="hidden" name="playlist_id" id="playlist_id" value="{{ $playlist->id }}">
           <input type="hidden" name="song_id" id="song_id" value="{{ $song->id }}">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <a href="{{ route('playlists.show', $playlist) }}" class="btn btn-primary">戻る</a>
+          <button type="submit" class="btn btn-success">Submit</button>
         </form>
       </div>
     </div>

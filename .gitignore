@@ -1,5 +1,6 @@
 /node_modules
 /public/storage
+/storage/xml
 /vendor
 /.idea
 Homestead.json
