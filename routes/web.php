@@ -11,13 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('/playlists');
-});
+Route::get('/', 'Controller@index');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
 
 //songs
 Route::resource('playlists', 'PlaylistsController');
