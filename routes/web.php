@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/playlists');
 });
 
 Auth::routes();
@@ -21,5 +21,9 @@ Route::get('/home', 'HomeController@index');
 
 //songs
 Route::resource('playlists', 'PlaylistsController');
-Route::resource('songs', 'SongsController');
-Route::resource('reviews', 'ReviewsController');
+Route::resource('playlists.songs', 'SongsController');
+Route::resource('playlists.songs.reviews', 'ReviewsController');
+Route::post('reviews/store', [
+    'uses' => 'ReviewsController@store',
+    'as'   => 'reviews.store'
+]);

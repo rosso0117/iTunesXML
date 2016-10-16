@@ -11,7 +11,7 @@ $(function() {
     var config = {
         type: 'radar',
         data: {
-            labels: ["芸術性", "エキサイティング", "ポップ", "楽しい"],
+            labels: ["評価基準1", "評価基準2", "評価基準3", "評価基準4"],
             datasets: [{
                 label: "評価",
                 backgroundColor: "rgba(255,99,132,0.2)",

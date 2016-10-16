@@ -79,16 +79,16 @@ class PlaylistsController extends Controller
         // 各楽曲のXMLテキストを連想配列にして、DBに保存
         foreach ($songs_info_text as $song_info_text) {
             $song_data = XMLParser::getSongDataFromInfoText($song_info_text);
-            $song = Song::create($song_data);
 
             // 既存の曲なら再生回数と時間だけを更新する
-            if (Song::where('track_id', $song->track_id)) {
+            if (Song::where('track_id', $song_data['track_id'])) {
+                $song = Song::where('track_id', $song_data['track_id'])->first();
                 $song->update([
-                    'play_count' => $song->play_count,
-                    'play_date' => $song->play_date
+                    'play_count' => $song_data['play_count'],
+                    'play_date' => $song_data['play_date']
                 ]);
             } else {
-                $song->save();
+                $song = Song::create($song_data);
             }
             $playlist->songs()->attach($song);
         }
