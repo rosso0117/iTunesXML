@@ -20,8 +20,9 @@
                   <?php $i=1; ?>
                   @foreach ($playlists as $playlist)
                     <tr>
-                      <th scope="row"><input type="checkbox" name="" id=""></th>
+                      <th scope="row"><input type="checkbox" name="checked_id"></th>
                       <td><a href="{{ route('playlists.show', $playlist) }}">{{ $playlist->name }}</a></td>
+                      <td><button type="submit" class="btn btn-danger">Delete</button></td>
                     </tr>
                     <?php $i += 1; ?>
                   @endforeach

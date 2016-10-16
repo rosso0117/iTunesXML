@@ -81,7 +81,7 @@ class PlaylistsController extends Controller
             $song_data = XMLParser::getSongDataFromInfoText($song_info_text);
 
             // 既存の曲なら再生回数と時間だけを更新する
-            if (Song::where('track_id', $song_data['track_id'])) {
+            if ( count(Song::where('track_id', $song_data['track_id'])->get()) > 0 ) {
                 $song = Song::where('track_id', $song_data['track_id'])->first();
                 $song->update([
                     'play_count' => $song_data['play_count'],
